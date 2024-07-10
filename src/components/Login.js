@@ -25,6 +25,8 @@ const Login = () => {
         navigate("./postslist");
       } else {
         message.error("login failed");
+        setUsername('');
+        setEmail('');
       }
     } catch (error) {
       message.error("login faild:", error);

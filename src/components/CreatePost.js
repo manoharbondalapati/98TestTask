@@ -1,19 +1,43 @@
 import axios from "axios";
 import React, { useState } from "react";
 import "../App.css";
+import { message } from "antd";
 
 const CreatePost = ({ onClose, postCreated }) => {
-  const [title, settitle] = useState("");
-  const [body, setbody] = useState("");
+  const [formData,setFormData] = useState(
+    {
+      title:'',
+      body:'',
+    }
+  );
+  const user = JSON.parse(localStorage.getItem('user'));
 
-  const handleCreatePost = async () => {
+
+  const handleChange =(e)=>
+  {
+    const {name,value}=e.target;
+    setFormData((prevFormData)=>({
+      ...prevFormData,[name]:value,
+    }));
+
+  };
+
+  const handleCreatePost = async (e) => {
+    e.preventDefault();
+    const {title,body}=formData;
+    if(!title || !body)
+    {
+      message.error('please Enter Post Details');
+      return
+    }
     try {
       const response = await axios.post(
-        "https://jsonplaceholder.typicode.com/posts",
+        'https://jsonplaceholder.typicode.com/posts',
         {
           title,
           body,
-          userId: 1,
+          userId:user.id,
+          
         }
       );
       postCreated(response.data);
@@ -27,22 +51,26 @@ const CreatePost = ({ onClose, postCreated }) => {
     <div className="modal">
       <div className="modal-content">
         <h2>Create New Post</h2>
+        <form onSubmit={handleCreatePost}>
         <lable>
           Title:
           <input
+            name="title"
             type="text"
-            value={title}
-            onChange={(e) => settitle(e.target.value)}
+            value={formData.title}
+            onChange={handleChange}
           />
         </lable>
         <lable>
           Body:
-          <textarea value={body} onChange={(e) => setbody(e.target.value)} />
+          <textarea name="body" value={formData.body} onChange={handleChange} />
         </lable>
-        <button onClick={handleCreatePost}>Create</button>
-        <button onClick={onClose}>Close</button>
+        <button type="submit" id="create-post" >Create</button>
+        <button type="button" id="create-post" onClick={onClose}>Close</button>
+        </form>
       </div>
     </div>
+    
   );
 };
 

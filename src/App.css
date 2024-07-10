@@ -36,6 +36,7 @@
     padding: 5px;
     font-size: 20px;
     border: solid 1px white;
+    cursor: pointer;
   }
 
 
@@ -58,6 +59,7 @@
   padding: 5px;
   font-size: 20px;
   border: solid 1px white;
+  cursor: pointer;
 }
 #action-button 
 {
@@ -77,8 +79,20 @@
   padding: 5px;
   font-size: 20px;
   border: solid 1px white;
+  cursor: pointer;
 }
 
+#create-post 
+{
+  margin-top: 15px;
+  border-radius: 5px;
+  background-color: rgb(102, 102, 215);
+  color: white;
+  padding: 5px;
+  font-size: 20px;
+  border: solid 1px white;
+  cursor: pointer;
+}
 
 #postList tbody td {
   padding: 7px;
@@ -95,6 +109,7 @@
   justify-content: center;
   align-items: center;
 }
+
 
 .modal-content {
   background: white;
@@ -124,4 +139,8 @@
   padding: 10px;
   box-shadow: 1px 1px 2px 4px;
 }
-
+#loading 
+{
+   color:rgb(235, 114, 96);
+   font-size: 40px;
+}

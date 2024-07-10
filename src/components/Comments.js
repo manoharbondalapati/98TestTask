@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../App.css";
 import CreateComment from "./CreateComment";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "./Header";
-
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
   const [showModel, setShowModel] = useState(false);
+  const navigate = useNavigate();
 
-  
-   const {id}=useParams();
-   
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -40,16 +38,13 @@ const Comments = () => {
     }
   };
 
-
-
   return (
     <div id="comments">
-      <Header/>
+      <Header />
       <header>
         <div>
-       
+          <button onClick={() => navigate("/postslist")}>Back</button>
           <button onClick={() => setShowModel(true)}>Add Comment</button>
-         
         </div>
         <div>
           <img
@@ -59,26 +54,30 @@ const Comments = () => {
         </div>
       </header>
       <center>
-        <table border={1}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Body</th>
-            </tr>
-          </thead>
-          <tbody>
-            {comments.map((comment,index) => (
-              <tr key={comment.id}>
-                <td>{index+1}</td>
-                <td>{comment.name}</td>
-                <td>{comment.email}</td>
-                <td>{comment.body}</td>
+        {comments.length > 0 ? (
+          <table border={1}>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Body</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {comments.map((comment, index) => (
+                <tr key={comment.id}>
+                  <td>{index + 1}</td>
+                  <td>{comment.name}</td>
+                  <td>{comment.email}</td>
+                  <td>{comment.body}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p id="loading">{comments ? "Getting Comments..." : "No Comments"}</p>
+        )}
       </center>
 
       {showModel && (

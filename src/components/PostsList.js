@@ -13,22 +13,26 @@ const PostsList = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts?userId=${user.id}`
-        );
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Error fteching Data", error);
-      }
-    };
-    fetchPosts();
+   
+      const fetchPosts = async () => {
+        try {
+          const response = await axios.get(
+            'https://jsonplaceholder.typicode.com/posts'
+          );
+          const userPosts= response.data.filter(post=>post.userId===user.id);
+          setPosts(userPosts);
+        } catch (error) {
+          console.error("Error fteching Data", error);
+        }
+      };
+      fetchPosts();
+    
   }, [user.id]);
 
   const handlePostCreate = (newpost) => {
-    message.success("new post added successfully");
-    setPosts([...posts, newpost]);
+    console.log(newpost);
+    setPosts((prevPosts)=>[  ...prevPosts,newpost ]);
+    message.success("New Post added Successfully");
   };
 
   return (
@@ -48,36 +52,39 @@ const PostsList = () => {
         </div>
       </header>
       <center>
-        <table border={1}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.map((post, index) => (
-              <tr key={post.id}>
-                <td>{index + 1}</td>
-                <td>
-                  <Link to={`/post/${post.id}`}>{post.title}</Link>
-                </td>
-                <td>
-                  <Link to={`/post/${post.id}`}>
-                    <button id="action-button">Details</button>
-                  </Link>
-                  <button
-                    onClick={() => navigate(`/posts/${post.id}/comments`)}
-                    id="action-button"
-                  >
-                    Comments
-                  </button>
-                </td>
+        {posts.length > 0 ? (
+          <table border={1}>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {posts.map((post, index) => (
+                <tr key={post.id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <Link to={`/post/${post.id}`}>{post.title}</Link>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => navigate(`/posts/${post.id}/comments`)}
+                      id="action-button"
+                    >
+                      Comments
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p id="loading">
+            {posts ? "Getting Data..." : "No posts available."}
+          </p>
+        )}
       </center>
       {showModel && (
         <CreatePost
