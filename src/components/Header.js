@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 const Header = () => {
-  const user = localStorage.getItem("user");
+  const user = sessionStorage.getItem("user");
   const userdata = user ? JSON.parse(user) : null;
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
     navigate("/");
   };
 

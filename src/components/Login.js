@@ -20,7 +20,7 @@ const Login = () => {
         (user) => user.username === username && user.email === email
       );
       if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
+        sessionStorage.setItem("user", JSON.stringify(user));
         message.success("login Success");
         navigate("./postslist");
       } else {

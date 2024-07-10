@@ -77,7 +77,7 @@ const CreateComment = ({ onClose, AddingComment }) => {
             required
           />
         </label>
-        <button onClick={handleAddComment}>ADD Comment</button>
+        <button onClick={handleAddComment}>Add Comment</button>
         <button onClick={onClose}>Close</button>
       </div>
     </div>

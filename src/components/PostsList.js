@@ -10,7 +10,7 @@ const PostsList = () => {
   const [posts, setPosts] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   useEffect(() => {
    
@@ -22,12 +22,12 @@ const PostsList = () => {
           const userPosts= response.data.filter(post=>post.userId===user.id);
           setPosts(userPosts);
         } catch (error) {
-          console.error("Error fteching Data", error);
+          console.error("Please Login", error);
         }
       };
       fetchPosts();
     
-  }, [user.id]);
+  }, [navigate, user.id]);
 
   const handlePostCreate = (newpost) => {
     console.log(newpost);
