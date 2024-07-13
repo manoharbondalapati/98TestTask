@@ -13,7 +13,6 @@ const PostsList = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   useEffect(() => {
-   
       const fetchPosts = async () => {
         try {
           const response = await axios.get(
@@ -27,7 +26,7 @@ const PostsList = () => {
       };
       fetchPosts();
     
-  }, [navigate, user.id]);
+  }, [navigate,             user.id]);
 
   const handlePostCreate = (newpost) => {
     console.log(newpost);
